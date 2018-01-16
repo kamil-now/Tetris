@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity
 {
 
     public GamePanel GamePanel;
-    public SidePanel SidePanel;
+    public SidePanelActivity SidePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         LinearLayout layout = new LinearLayout(this);
         GamePanel =new GamePanel(this);
-        SidePanel = new SidePanel(this);
+        SidePanel = new SidePanelActivity(this);
         //int width = (int)((double)layout.getMeasuredWidth()/2);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager windowmanager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity
         SidePanel.setLayoutParams(new LinearLayout.LayoutParams(
                 sidePanelWidth,
                 LinearLayout.LayoutParams.MATCH_PARENT));
-
         layout.addView(SidePanel);
         layout.addView(GamePanel);
         setContentView(layout);

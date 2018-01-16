@@ -70,7 +70,7 @@ public class Grid
 
 //        leftMargin = (width - spacing * (columns)) / 2;
 //        topMargin = (height - spacing * (rows)) / 2;
-        leftMargin = (int)(width*0.1);
+        //leftMargin = (int)(width*0.2);
         topMargin = (int)(height*0.1);
         drawVerticalLines(canvas);
         drawHorizontalLines(canvas);

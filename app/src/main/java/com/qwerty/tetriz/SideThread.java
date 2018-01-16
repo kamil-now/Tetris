@@ -6,7 +6,7 @@ import android.view.SurfaceHolder;
 public class SideThread extends Thread
 {
     private SurfaceHolder surfaceHolder;
-    private SidePanel sidePanel;
+    private SidePanelActivity sidePanel;
     private boolean running;
 
     public void setRunning(boolean running)
@@ -15,7 +15,7 @@ public class SideThread extends Thread
     }
     public static Canvas canvas;
 
-    public SideThread(SurfaceHolder surfaceHolder, SidePanel sidePanel)
+    public SideThread(SurfaceHolder surfaceHolder, SidePanelActivity sidePanel)
     {
         super();
         this.surfaceHolder = surfaceHolder;

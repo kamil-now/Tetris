@@ -7,14 +7,5 @@
     android:orientation="horizontal"
     tools:context="com.qwerty.tetriz.MainActivity">
 
-    <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:layout_width="100dp"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--tools:context="@{SideView}"/>-->
 
-
-    <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--tools:context="@{GamePanel}"/>-->
 </LinearLayout>
