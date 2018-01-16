@@ -1,64 +1,39 @@
 package com.qwerty.tetriz;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public final class SidePanelActivity extends LinearLayout// implements SurfaceHolder.Callback
-{
+public final class SidePanelActivity extends LinearLayout {
     private static SidePanelActivity instance;
 
-    public static SidePanelActivity getInstance()
-    {
+    public static SidePanelActivity getInstance() {
         return instance;
     }
 
-    private SideThread thread;
-    private Paint paint;
+    private int level;
+    private TextView levelTv;
 
-    public SidePanelActivity(Context context)
+    public void setLevel(int value)
     {
-        super(context);
-        View.inflate(context, R.layout.activity_sidepanel,this);
-        if (instance == null)
-        {
-            instance = this;
-
-            //paint = new Paint();
-            //paint.setColor(Color.WHITE);
-            //paint.setStyle(Style.FILL);
-
-            //getHolder().addCallback(this);
-            //setFocusable(true);
-            //thread = new SideThread(getHolder(), this);
-        }
+        level=value;
+        levelTv.setText(String.valueOf(level));
     }
 
+    public int getLevel() {
+        return level;
+    }
 
-//    @Override
-//    public void draw(Canvas canvas)
-//    {
-//        super.draw(canvas);
-//        //canvas.drawPaint(paint);
-//    }
-//
-//    @Override
-//    public void surfaceCreated(SurfaceHolder holder)
-//    {
-//        //thread.setRunning(true);
-//        //thread.start();
-//    }
-//
-//    @Override
-//    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-//    {
-//
-//    }
-//
-//    @Override
-//    public void surfaceDestroyed(SurfaceHolder holder)
-//    {
-//
-//    }
+    public SidePanelActivity(Context context) {
+        super(context);
+
+
+        if (instance == null) {
+            instance = this;
+            View.inflate(context, R.layout.activity_sidepanel, this);
+            levelTv = findViewById(R.id.level);
+            setLevel(0);
+        }
+    }
 }

@@ -7,10 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-    <style name="Btn" parent="@android:style/MediaButton.Pause" >
+    <style name="Btn" parent="@android:style/Widget.Button" >
         <item name="android:background">@drawable/background_frame</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginLeft">10dip</item>
+        <item name="android:layout_marginRight">10dip</item>
+        <item name="android:layout_marginTop">30dip</item>
+        <item name="android:layout_marginBottom">10dip</item>
     </style>
 
 </resources>
