@@ -48,24 +48,24 @@ public final class RandomBlockGenerator
             lastTypes.add(temp);
         }
 
-
-        switch (temp)
-        {
-            case T:
-                return new T(new Point(startX, startY));
-            case I:
-                return new I(new Point(startX, startY));
-            case L:
-                return new L(new Point(startX, startY));
-            case S:
-                return new S(new Point(startX, startY));
-            case Z:
-                return new Z(new Point(startX, startY));
-            case J:
-                return new J(new Point(startX, startY));
-            case O:
-                return new O(new Point(startX, startY));
-        }
-        return null;
+        return new I(new Point(startX,startY));
+//        switch (temp)
+//        {
+//            case T:
+//                return new T(new Point(startX, startY));
+//            case I:
+//                return new I(new Point(startX, startY));
+//            case L:
+//                return new L(new Point(startX, startY));
+//            case S:
+//                return new S(new Point(startX, startY));
+//            case Z:
+//                return new Z(new Point(startX, startY));
+//            case J:
+//                return new J(new Point(startX, startY));
+//            case O:
+//                return new O(new Point(startX, startY));
+//        }
+//        return null;
     }
 }

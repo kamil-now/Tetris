@@ -22,11 +22,11 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     }
 
     private MainThread thread;
-    private float initEventX;
-    private float initEventY;
+    private float      initEventX;
+    private float      initEventY;
     private final int MAX_CLICK_DURATION = 200;
-    private long startClickTime;
-    private Grid grid;
+    private long  startClickTime;
+    private Grid  grid;
     private Block block;
 
     public Grid getGrid()
@@ -60,8 +60,9 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
                     @Override
                     public void run()
                     {
-                        boolean fixed = !block.moveDown();
-                        if (fixed)
+                        if (block.canMoveDown())
+                            block.moveDown();
+                        else
                             createNewBlock();
                     }
                 }, 0, 1000);
@@ -74,6 +75,7 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         grid.draw(canvas);
         block.draw(canvas);
     }
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
     {
@@ -97,7 +99,8 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
             {
                 thread.join();
                 retry = false;
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -124,7 +127,8 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
                 {
                     if (block instanceof IRotate)
                         ((IRotate) block).rotate();
-                } else if (y > initEventY + 2 * grid.getSpacing())
+                }
+                else if (y > initEventY + 2 * grid.getSpacing())
                 {
                     block.drop();
                 }
@@ -149,17 +153,19 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         double blockPosX = block.position.x * grid.getSpacing() + grid.getLeftMargin();
 //        double blockPosY = block.position.y * grid.getSpacing() + grid.getTopMargin();
         if (x > blockPosX + grid.getSpacing() && x > initEventX)
-            block.moveRight();
+        {
+            if (block.canMoveRight())
+            {
+                block.moveRight();
+            }
+        }
         else if (x < blockPosX - grid.getSpacing() && x < initEventX)
-            block.moveLeft();
-//        else if (y > blockPosY + 2 * grid.getSpacing() && y > initEventY && y < blockPosY + 3 * grid.getSpacing())
-//            block.moveDown();
-//        else if (y > initEventY + 7 * grid.getSpacing())
-//        {
-//            block.drop();
-//        }
+        {
+            if (block.canMoveLeft())
+            {
+                block.moveLeft();
+            }
+        }
     }
-
-
 }
 

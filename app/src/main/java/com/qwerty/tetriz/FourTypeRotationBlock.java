@@ -62,14 +62,7 @@ public abstract class FourTypeRotationBlock extends Block implements IRotate
                 updateUpRotation(this.position);
                 break;
         }
-        if (!isOnGrid(GamePanel.getInstance().getGrid()))
-        {
-            //TODO try to correct position method
-        }
-        if (collidesWithFixedBlock(Direction.NONE))
-        {
-            unrotate();
-        }
+        super.rotate();
 
     }
 
