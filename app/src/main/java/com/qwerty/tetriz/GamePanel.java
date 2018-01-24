@@ -22,11 +22,11 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     }
 
     private MainThread thread;
-    private float      initEventX;
-    private float      initEventY;
+    private float initEventX;
+    private float initEventY;
     private final int MAX_CLICK_DURATION = 200;
-    private long  startClickTime;
-    private Grid  grid;
+    private long startClickTime;
+    private Grid grid;
     private Block block;
 
     public Grid getGrid()
@@ -60,7 +60,8 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
                     @Override
                     public void run()
                     {
-                        if (block.canMoveDown())
+                        boolean canMoveDown = block.canMoveDown();
+                        if (canMoveDown)
                             block.moveDown();
                         else
                             createNewBlock();
@@ -123,12 +124,13 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
             case MotionEvent.ACTION_UP:
                 long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                 float y = event.getY();
-                if (clickDuration < MAX_CLICK_DURATION)
+                float x = event.getX();
+                if (clickDuration < MAX_CLICK_DURATION && Math.abs(y - initEventY) < 1 && Math.abs(x - initEventX) < 20)
                 {
                     if (block instanceof IRotate)
                         ((IRotate) block).rotate();
                 }
-                else if (y > initEventY + 2 * grid.getSpacing())
+                else if (y > initEventY && Math.abs(x - initEventX) < 20)
                 {
                     block.drop();
                 }
@@ -149,9 +151,7 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     private void moveBlock(MotionEvent event)
     {
         float x = event.getX();
-//        float y = event.getY();
         double blockPosX = block.position.x * grid.getSpacing() + grid.getLeftMargin();
-//        double blockPosY = block.position.y * grid.getSpacing() + grid.getTopMargin();
         if (x > blockPosX + grid.getSpacing() && x > initEventX)
         {
             if (block.canMoveRight())

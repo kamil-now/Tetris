@@ -41,7 +41,7 @@ public class Square
 
     public boolean isOnGrid(Grid grid)
     {
-        if (this.position.x < 0 && this.position.x > grid.getColumns())
+        if (this.position.x < 0 || this.position.x > grid.getColumns()-1)
         {
             return false;
         }

@@ -62,7 +62,7 @@ public abstract class FourTypeRotationBlock extends Block implements IRotate
                 updateUpRotation(this.position);
                 break;
         }
-        super.rotate();
+        checkPositionAfterRotation();
 
     }
 

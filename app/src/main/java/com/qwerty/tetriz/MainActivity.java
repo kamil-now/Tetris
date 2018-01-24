@@ -9,7 +9,12 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static MainActivity instance;
 
+    public static MainActivity getInstance()
+    {
+        return instance;
+    }
     public GamePanel GamePanel;
     public SidePanelActivity SidePanel;
 
@@ -17,6 +22,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        instance = this;
         LinearLayout layout = new LinearLayout(this);
         GamePanel =new GamePanel(this);
         SidePanel = new SidePanelActivity(this);

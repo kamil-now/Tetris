@@ -7,14 +7,14 @@ import android.graphics.Point;
 import java.util.List;
 
 
-public abstract class Block implements IRotate
+public abstract class Block
 {
-    protected Point  position;
+    protected Point position;
     protected Square top;
     protected Square bottom;
     protected Square right;
     protected Square left;
-    protected Paint  paint;
+    protected Paint paint;
 
 
     public Block(Point position, int color)
@@ -28,20 +28,7 @@ public abstract class Block implements IRotate
         right = new Square(position, paint);
         left = new Square(position, paint);
     }
-    @Override
-    public void unrotate(){}
-    @Override
-    public void rotate()
-    {
-        if (!isOnGrid(GamePanel.getInstance().getGrid()))
-        {
-            checkPositionAfterRotation();
-        }
-        if (collidesWithFixedBlock(Direction.NONE))
-        {
-            unrotate();
-        }
-    }
+
     public abstract void updatePos(Point point);
 
     public void draw(Canvas canvas)
@@ -75,12 +62,28 @@ public abstract class Block implements IRotate
             this.moveDown();
         }
     }
+    public boolean canMoveRight()
+    {
+        return right.position.x + 1 < GamePanel.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
+    }
 
+    public boolean canMoveLeft()
+    {
+        return left.position.x > 0 && !collidesWithFixedBlock(Direction.LEFT);
+    }
+
+    public boolean canMoveDown()
+    {
+        return (left.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && right.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && top.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && bottom.position.y + 1 < GamePanel.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
+    }
     //collision detection with other blocks on the grid
     protected boolean collidesWithFixedBlock(Direction direction)
     {
-        List<Square>        tempList = GamePanel.getInstance().getGrid().getFixedBlocks();
-        BlockPositionHolder temp     = new BlockPositionHolder(this, direction);
+        List<Square> tempList = GamePanel.getInstance().getGrid().getFixedBlocks();
+        BlockPositionHolder temp = new BlockPositionHolder(this, direction);
         for (Square fixed : tempList)
         {
             if (temp.collides(fixed))
@@ -99,71 +102,67 @@ public abstract class Block implements IRotate
 
     protected void checkPositionAfterRotation()
     {
-        Grid grid = GamePanel.getInstance().getGrid();
+        if (this instanceof IRotate)
+        {
+            if (collidesWithFixedBlock(Direction.NONE))
+            {
+                ((IRotate) this).unrotate();
+            }
+            else
+            {
+                Grid grid = GamePanel.getInstance().getGrid();
+                if (!left.isOnGrid(grid))
+                {
+                    if (!correctToRight(grid))
+                    {
+                        ((IRotate) this).unrotate();
+                    }
+                }
+                else if (!right.isOnGrid(grid))
+                {
+                    if (!correctToLeft(grid))
+                    {
+                        ((IRotate) this).unrotate();
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean correctToRight(Grid grid)
+    {
+        int i = 0;
+        for (; !left.isOnGrid(grid) && canMoveRight(); i++)
+        {
+            moveRight();
+        }
         if (!left.isOnGrid(grid))
         {
-            tryCorrectToRight(grid);
+            for (; i > 0; i--)
+            {
+                moveLeft();
+            }
+            return false;
         }
-        else if (!right.isOnGrid(grid))
-        {
-            tryCorrectToLeft(grid);
-        }
+        return true;
     }
 
-    private void tryCorrectToRight(Grid grid)
+    private boolean correctToLeft(Grid grid)
     {
         int i = 0;
-        do
+        for (; !right.isOnGrid(grid) && canMoveLeft(); i++)
         {
-            this.moveRight();
-            i++;
+            moveLeft();
         }
-        while (!left.isOnGrid(grid));
-
-        if (this.collidesWithFixedBlock(Direction.NONE))
+        if (!right.isOnGrid(grid))
         {
-            for (; i > 0; --i)
+            for (; i > 0; i--)
             {
-                this.moveLeft();
+                moveRight();
             }
+            return false;
         }
-    }
-
-    private void tryCorrectToLeft(Grid grid)
-    {
-        int i = 0;
-        do
-        {
-            this.moveLeft();
-            i++;
-        }
-        while (!right.isOnGrid(grid));
-
-        if (this.collidesWithFixedBlock(Direction.NONE))
-        {
-            for (; i > 0; --i)
-            {
-                this.moveRight();
-            }
-        }
-    }
-
-    public boolean canMoveRight()
-    {
-        return right.position.x + 1 < GamePanel.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
-    }
-
-    public boolean canMoveLeft()
-    {
-        return left.position.x > 0 && !collidesWithFixedBlock(Direction.LEFT);
-    }
-
-    public boolean canMoveDown()
-    {
-        return (left.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && right.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && top.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && bottom.position.y + 1 < GamePanel.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
+        return true;
     }
 }
 

@@ -46,14 +46,7 @@ public abstract class TwoTypeRotationBlock extends Block implements IRotate
                 updateHorizontalRotation(this.position);
                 break;
         }
-        if (!isOnGrid(GamePanel.getInstance().getGrid()))
-        {
-            checkPositionAfterRotation();
-        }
-        if (collidesWithFixedBlock(Direction.NONE))
-        {
-            unrotate();
-        }
+        checkPositionAfterRotation();
     }
 
     public void unrotate()
