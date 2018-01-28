@@ -28,6 +28,7 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     private long startClickTime;
     private Grid grid;
     private Block block;
+    private boolean isPaused;
 
     public Grid getGrid()
     {
@@ -47,6 +48,11 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
+    public void PauseClick()
+    {
+        isPaused = !isPaused;
+    }
+
     private void init()
     {
         thread = new MainThread(getHolder(), this);
@@ -60,11 +66,14 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
                     @Override
                     public void run()
                     {
-                        boolean canMoveDown = block.canMoveDown();
-                        if (canMoveDown)
-                            block.moveDown();
-                        else
-                            createNewBlock();
+                        if (!isPaused)
+                        {
+                            boolean canMoveDown = block.canMoveDown();
+                            if (canMoveDown)
+                                block.moveDown();
+                            else
+                                createNewBlock();
+                        }
                     }
                 }, 0, 1000);
     }
@@ -111,29 +120,32 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        switch (event.getAction())
+        if (!isPaused)
         {
-            case MotionEvent.ACTION_DOWN:
-                startClickTime = Calendar.getInstance().getTimeInMillis();
-                initEventX = event.getX();
-                initEventY = event.getY();
-                return true;
-            case MotionEvent.ACTION_MOVE:
-                moveBlock(event);
-                return true;
-            case MotionEvent.ACTION_UP:
-                long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
-                float y = event.getY();
-                float x = event.getX();
-                if (clickDuration < MAX_CLICK_DURATION && Math.abs(y - initEventY) < 1 && Math.abs(x - initEventX) < 20)
-                {
-                    if (block instanceof IRotate)
-                        ((IRotate) block).rotate();
-                }
-                else if (y > initEventY && Math.abs(x - initEventX) < 20)
-                {
-                    block.drop();
-                }
+            switch (event.getAction())
+            {
+                case MotionEvent.ACTION_DOWN:
+                    startClickTime = Calendar.getInstance().getTimeInMillis();
+                    initEventX = event.getX();
+                    initEventY = event.getY();
+                    return true;
+                case MotionEvent.ACTION_MOVE:
+                    moveBlock(event);
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                    float y = event.getY();
+                    float x = event.getX();
+                    if (clickDuration < MAX_CLICK_DURATION && Math.abs(y - initEventY) < 1 && Math.abs(x - initEventX) < 20)
+                    {
+                        if (block instanceof IRotate)
+                            ((IRotate) block).rotate();
+                    }
+                    else if (y > initEventY && Math.abs(x - initEventX) < 20)
+                    {
+                        block.drop();
+                    }
+            }
         }
         return super.onTouchEvent(event);
     }

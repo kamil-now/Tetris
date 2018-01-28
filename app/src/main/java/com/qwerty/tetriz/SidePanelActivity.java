@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public final class SidePanelActivity extends LinearLayout
+public final class SidePanelActivity extends LinearLayout implements View.OnClickListener
 {
     private static SidePanelActivity instance;
 
@@ -14,7 +14,7 @@ public final class SidePanelActivity extends LinearLayout
         return instance;
     }
 
-    private int      level;
+    private int level;
     private TextView levelTv;
 
     public void setLevel(int value)
@@ -46,6 +46,27 @@ public final class SidePanelActivity extends LinearLayout
             View.inflate(context, R.layout.activity_sidepanel, this);
             levelTv = findViewById(R.id.level);
             setLevel(1);
+            findViewById(R.id.pauseBtn).setOnClickListener(this);
+            findViewById(R.id.exitBtn).setOnClickListener(this);
         }
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        switch (view.getId())
+        {
+            case R.id.pauseBtn:
+                GamePanel.getInstance().PauseClick();
+                break;
+            case R.id.exitBtn:
+                Exit();
+                break;
+        }
+    }
+
+    private void Exit()
+    {
+
     }
 }

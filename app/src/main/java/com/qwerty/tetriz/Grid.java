@@ -120,17 +120,26 @@ public class Grid
     private void deleteRows(ArrayList rows)
     {
         List<Square> temp = new ArrayList<>();
+        List<Square> blocksToMove = new ArrayList<>();
         for (Object i : rows)
         {
             for (Square sqr : fixedBlocks)
             {
                 if (sqr.position.y != (int) i)
                 {
-                    if (sqr.position.y < (int) i)
-                        sqr.updatePos(new Point(sqr.position.x, sqr.position.y + 1));
+                    if (sqr.position.y == (int) i-1)
+                    {
+                        blocksToMove.add(sqr);
+                        //sqr.updatePos(new Point(sqr.position.x, sqr.position.y + 1));
+                    }
                     temp.add(sqr);
                 }
             }
+        }
+        for(Square sqr : blocksToMove)
+        {
+            sqr.updatePos(new Point(sqr.position.x, sqr.position.y + 1));
+            temp.add(sqr);
         }
         fixedBlocks = new ArrayList(temp);
 
