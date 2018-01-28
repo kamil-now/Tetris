@@ -25,37 +25,37 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         {
 
             case R.id.playBtn:
-                LoadMainActivity();
+                loadMainActivity();
                 break;
             case R.id.highScoresBtn:
-                DisplayHighScores();
+                displayHighScores();
                 break;
             case R.id.helpBtn:
-                ShowHelp();
+                showHelp();
                 break;
             case R.id.exitBtn:
-                Exit();
+                exit();
                 break;
         }
     }
 
-    private void LoadMainActivity()
+    private void loadMainActivity()
     {
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    private void DisplayHighScores()
+    private void displayHighScores()
     {
 
     }
 
-    private void ShowHelp()
+    private void showHelp()
     {
 
     }
 
-    private void Exit()
+    private void exit()
     {
-
+        MainActivity.getInstance().exitApp();
     }
 }

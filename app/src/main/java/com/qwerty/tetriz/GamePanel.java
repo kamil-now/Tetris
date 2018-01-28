@@ -48,7 +48,7 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 
-    public void PauseClick()
+    public void pauseClick()
     {
         isPaused = !isPaused;
     }
@@ -59,6 +59,36 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         grid = new Grid(22, 10, Color.GRAY);
         new RandomBlockGenerator(grid.getColumns() / 2, -2);
         block = RandomBlockGenerator.getRandom();
+    }
+
+    @Override
+    public void draw(Canvas canvas)
+    {
+        super.draw(canvas);
+        grid.draw(canvas);
+        block.draw(canvas);
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
+    {
+
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder)
+    {
+        if (thread.getState() == Thread.State.TERMINATED)
+        {
+            getHolder().addCallback(this);
+            thread = new MainThread(getHolder(), this);
+        }
+        thread.setRunning(true);
+        thread.start();
+    }
+
+    public void onResume()
+    {
 
         new Timer().scheduleAtFixedRate(
                 new TimerTask()
@@ -79,42 +109,12 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     }
 
     @Override
-    public void draw(Canvas canvas)
-    {
-        super.draw(canvas);
-        grid.draw(canvas);
-        block.draw(canvas);
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-    {
-
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder)
-    {
-        thread.setRunning(true);
-        thread.start();
-    }
-
-    @Override
     public void surfaceDestroyed(SurfaceHolder holder)
     {
-        boolean retry = true;
-        while (retry)
-        {
-            try
-            {
-                thread.join();
-                retry = false;
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-        }
+//        if (!isPaused)
+//        {
+//            isPaused = true;
+//        }
     }
 
     @Override
