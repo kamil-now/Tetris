@@ -11,7 +11,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_activity);
+        setContentView(R.layout.activity_menu);
         findViewById(R.id.playBtn).setOnClickListener(this);
         findViewById(R.id.highScoresBtn).setOnClickListener(this);
         findViewById(R.id.helpBtn).setOnClickListener(this);

@@ -1,6 +1,7 @@
 package com.qwerty.tetriz;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -67,6 +68,9 @@ public final class SidePanelActivity extends LinearLayout implements View.OnClic
 
     private void Exit()
     {
-
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //startActivity(intent);
     }
 }

@@ -119,30 +119,32 @@ public class Grid
 
     private void deleteRows(ArrayList rows)
     {
-        List<Square> temp = new ArrayList<>();
-        List<Square> blocksToMove = new ArrayList<>();
-        for (Object i : rows)
+        List<Square> blocksToRemove = new ArrayList();
+        List<Square> blocksToMove = new ArrayList();
+        for (int i = 0; i < rows.size(); i++)
         {
-            for (Square sqr : fixedBlocks)
+
+            for (int j = 0; j < fixedBlocks.size(); j++)
             {
-                if (sqr.position.y != (int) i)
+                Square item = fixedBlocks.get(j);
+                if (item.position.y == (int)rows.get(i))
                 {
-                    if (sqr.position.y == (int) i-1)
-                    {
-                        blocksToMove.add(sqr);
-                        //sqr.updatePos(new Point(sqr.position.x, sqr.position.y + 1));
-                    }
-                    temp.add(sqr);
+                    blocksToRemove.add(item);
+                }
+                else if (item.position.y < (int)rows.get(i))
+                {
+                    blocksToMove.add(item);
                 }
             }
         }
-        for(Square sqr : blocksToMove)
+        for (Square item : blocksToMove)
         {
-            sqr.updatePos(new Point(sqr.position.x, sqr.position.y + 1));
-            temp.add(sqr);
+            item.updatePos(new Point(item.position.x, item.position.y + 1));
         }
-        fixedBlocks = new ArrayList(temp);
-
+        for(Square item : blocksToRemove)
+        {
+            fixedBlocks.remove(item);
+        }
     }
 
     private void drawVerticalLines(Canvas canvas)
