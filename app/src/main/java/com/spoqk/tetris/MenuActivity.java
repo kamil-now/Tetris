@@ -1,4 +1,4 @@
-package com.qwerty.tetriz;
+package com.spoqk.tetris;
 
 import android.content.Intent;
 import android.os.Bundle;

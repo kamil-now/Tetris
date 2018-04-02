@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="com.qwerty.tetriz.SidePanelActivity">
+    tools:context="com.qwerty.tetris.SidePanelActivity">
 
     <RelativeLayout
         android:layout_width="fill_parent"

@@ -1,4 +1,4 @@
-package com.qwerty.tetriz;
+package com.spoqk.tetris;
 
 public enum Direction
 {

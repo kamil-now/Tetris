@@ -1,4 +1,4 @@
-package com.qwerty.tetriz;
+package com.spoqk.tetris;
 
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
