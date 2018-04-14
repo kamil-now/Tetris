@@ -1,20 +1,27 @@
-package com.spoqk.tetris;
+package com.spoqk.tetris.models.base;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+
+import com.spoqk.tetris.BlockPositionHolder;
+import com.spoqk.tetris.GamePanel;
+import com.spoqk.tetris.Grid;
+import com.spoqk.tetris.IRotate;
+import com.spoqk.tetris.enums.Direction;
+import com.spoqk.tetris.models.Square;
 
 import java.util.List;
 
 
 public abstract class Block
 {
-    protected Point position;
-    protected Square top;
-    protected Square bottom;
-    protected Square right;
-    protected Square left;
-    protected Paint paint;
+    public Point position;
+    public Square top;
+    public Square bottom;
+    public Square right;
+    public Square left;
+    public Paint paint;
 
 
     public Block(Point position, int color)
@@ -64,20 +71,20 @@ public abstract class Block
     }
     public boolean canMoveRight()
     {
-        return right.position.x + 1 < GamePanel.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
+        return right.getPosition().x + 1 < GamePanel.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
     }
 
     public boolean canMoveLeft()
     {
-        return left.position.x > 0 && !collidesWithFixedBlock(Direction.LEFT);
+        return left.getPosition().x > 0 && !collidesWithFixedBlock(Direction.LEFT);
     }
 
     public boolean canMoveDown()
     {
-        return (left.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && right.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && top.position.y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && bottom.position.y + 1 < GamePanel.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
+        return (left.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && right.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && top.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
+                && bottom.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
     }
     //collision detection with other blocks on the grid
     protected boolean collidesWithFixedBlock(Direction direction)

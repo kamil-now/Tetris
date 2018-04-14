@@ -9,7 +9,6 @@ public class MainThread extends Thread
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
-    public boolean isRunning(){return running;}
     public void setRunning(boolean running)
     {
         this.running = running;

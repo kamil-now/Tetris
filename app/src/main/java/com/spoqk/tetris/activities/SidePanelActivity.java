@@ -1,9 +1,12 @@
-package com.spoqk.tetris;
+package com.spoqk.tetris.activities;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.spoqk.tetris.GamePanel;
+import com.spoqk.tetris.R;
 
 public final class SidePanelActivity extends LinearLayout implements View.OnClickListener
 {

@@ -4,6 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
+import com.spoqk.tetris.models.Square;
+import com.spoqk.tetris.models.base.Block;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +72,7 @@ public class Grid
         spacing = (Math.min(width, height) / columns) * 1;
 
         //leftMargin = (int)(width*0.2);
-        topMargin = (int)(height*0.1);
+        topMargin = (int)(height*0.02);
         drawVerticalLines(canvas);
         drawHorizontalLines(canvas);
         drawFixedBlocks(canvas);
@@ -102,7 +105,7 @@ public class Grid
             int count = 0;
             for (Square sqr : fixedBlocks)
             {
-                if (sqr.position.y == i)
+                if (sqr.getPosition().y == i)
                 {
                     count++;
                     if (count == columns)
@@ -127,11 +130,11 @@ public class Grid
             for (int j = 0; j < fixedBlocks.size(); j++)
             {
                 Square item = fixedBlocks.get(j);
-                if (item.position.y == (int)rows.get(i))
+                if (item.getPosition().y == (int)rows.get(i))
                 {
                     blocksToRemove.add(item);
                 }
-                else if (item.position.y < (int)rows.get(i))
+                else if (item.getPosition().y < (int)rows.get(i))
                 {
                     blocksToMove.add(item);
                 }
@@ -139,7 +142,7 @@ public class Grid
         }
         for (Square item : blocksToMove)
         {
-            item.updatePos(new Point(item.position.x, item.position.y + 1));
+            item.updateGridPosition(new Point(item.getPosition().x, item.getPosition().y + 1));
         }
         for(Square item : blocksToRemove)
         {

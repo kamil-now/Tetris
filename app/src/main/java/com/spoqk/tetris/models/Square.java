@@ -1,16 +1,25 @@
-package com.spoqk.tetris;
+package com.spoqk.tetris.models;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import com.spoqk.tetris.GamePanel;
+import com.spoqk.tetris.Grid;
+import com.spoqk.tetris.GridPoint;
+
 public class Square
 {
     private Paint paint;
     private Rect rect;
-    public GridPoint actualPosition;
-    public Point position;
+    private GridPoint actualPosition;
+    private Point position;
+
+    public Point getPosition()
+    {
+        return position;
+    }
 
     public Square(Point pos, Paint paint)
     {
@@ -18,7 +27,7 @@ public class Square
         this.paint = paint;
         rect = new Rect();
         actualPosition = new GridPoint(pos);
-        updatePos(pos);
+        updateGridPosition(pos);
     }
 
     public Square(Point pos)
@@ -29,23 +38,23 @@ public class Square
     public void draw(Canvas canvas)
     {
         rect.set(actualPosition.left(), actualPosition.top(), actualPosition.right(), actualPosition.bottom());
-        canvas.drawRect(rect, paint);
+        if (this.isOnGrid(GamePanel.getInstance().getGrid()))
+            canvas.drawRect(rect, paint);
     }
 
-    public void updatePos(Point pos)
+    public void updateGridPosition(Point gridPoint)
     {
-        position = pos;
-        actualPosition.update(pos);
+        position = gridPoint;
+        actualPosition.update(gridPoint);
         rect.set(actualPosition.left(), actualPosition.top(), actualPosition.right(), actualPosition.bottom());
     }
 
     public boolean isOnGrid(Grid grid)
     {
-        if (this.position.x < 0 || this.position.x > grid.getColumns()-1)
+        if (this.position.x < 0 || this.position.x > grid.getColumns() - 1)
         {
             return false;
         }
         return true;
     }
-
 }

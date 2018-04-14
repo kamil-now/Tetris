@@ -3,6 +3,8 @@ package com.spoqk.tetris;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+import com.spoqk.tetris.activities.SidePanelActivity;
+
 public class SideThread extends Thread
 {
     private SurfaceHolder surfaceHolder;

@@ -1,6 +1,8 @@
-package com.spoqk.tetris;
+package com.spoqk.tetris.models.base;
 
 import android.graphics.Point;
+
+import com.spoqk.tetris.IRotate;
 
 public abstract class TwoTypeRotationBlock extends Block implements IRotate
 {

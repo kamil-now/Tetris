@@ -1,4 +1,4 @@
-package com.spoqk.tetris;
+package com.spoqk.tetris.enums;
 
 public enum Direction
 {

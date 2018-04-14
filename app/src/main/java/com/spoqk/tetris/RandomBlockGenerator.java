@@ -1,33 +1,30 @@
 package com.spoqk.tetris;
 
-
 import android.graphics.Point;
+
+import com.spoqk.tetris.enums.BlockType;
+import com.spoqk.tetris.models.I;
+import com.spoqk.tetris.models.J;
+import com.spoqk.tetris.models.L;
+import com.spoqk.tetris.models.O;
+import com.spoqk.tetris.models.S;
+import com.spoqk.tetris.models.T;
+import com.spoqk.tetris.models.Z;
+import com.spoqk.tetris.models.base.Block;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public final class RandomBlockGenerator
 {
-    public enum BlockType
-    {
-        T,
-        I,
-        L,
-        S,
-        Z,
-        J,
-        O
-    }
-
     private static BlockType[] blockTypes;
     private static Random rand;
     private static ArrayList lastTypes;
-    private static int startX;
-    private static int startY;
-    public RandomBlockGenerator(int x, int y)
+    private static Point startingPoint;
+
+    public RandomBlockGenerator(Point startingPoint)
     {
-        startX=x;
-        startY=y;
+        this.startingPoint = startingPoint;
         blockTypes = BlockType.values();
         rand = new Random();
         lastTypes = new ArrayList();
@@ -35,36 +32,42 @@ public final class RandomBlockGenerator
 
     public static Block getRandom()
     {
-        BlockType temp = blockTypes[rand.nextInt(blockTypes.length)];
+        BlockType type = blockTypes[rand.nextInt(blockTypes.length)];
         if (lastTypes.size() >= 3)
         {
-            while (lastTypes.contains(temp))
-                temp = blockTypes[rand.nextInt(blockTypes.length)];
+            while (lastTypes.contains(type))
+                type = blockTypes[rand.nextInt(blockTypes.length)];
             lastTypes.remove(0);
-            lastTypes.add(temp);
-        } else
-        {
-            temp = blockTypes[rand.nextInt(blockTypes.length)];
-            lastTypes.add(temp);
+            lastTypes.add(type);
         }
+        else
+        {
+            type = blockTypes[rand.nextInt(blockTypes.length)];
+            lastTypes.add(type);
+        }
+        return getNewBlock(type);
+    }
 
-        switch (temp)
+    private static Block getNewBlock(BlockType type)
+    {
+        switch (type)
         {
             case T:
-                return new T(new Point(startX, startY));
+                return new T(startingPoint);
             case I:
-                return new I(new Point(startX, startY));
+                return new I(startingPoint);
             case L:
-                return new L(new Point(startX, startY));
+                return new L(startingPoint);
             case S:
-                return new S(new Point(startX, startY));
+                return new S(startingPoint);
             case Z:
-                return new Z(new Point(startX, startY));
+                return new Z(startingPoint);
             case J:
-                return new J(new Point(startX, startY));
+                return new J(startingPoint);
             case O:
-                return new O(new Point(startX, startY));
+                return new O(startingPoint);
+            default:
+                return null;
         }
-        return null;
     }
 }

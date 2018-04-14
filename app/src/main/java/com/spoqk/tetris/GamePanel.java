@@ -4,9 +4,12 @@ package com.spoqk.tetris;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.spoqk.tetris.models.base.Block;
 
 import java.util.Calendar;
 import java.util.Timer;
@@ -56,8 +59,9 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     private void init()
     {
         thread = new MainThread(getHolder(), this);
-        grid = new Grid(22, 10, Color.GRAY);
-        new RandomBlockGenerator(grid.getColumns() / 2, -2);
+        grid = new Grid(24, 10, Color.GRAY);
+        Point startingPoint = new Point(grid.getColumns() / 2, -2);
+        new RandomBlockGenerator(startingPoint);
         block = RandomBlockGenerator.getRandom();
     }
 
@@ -111,10 +115,6 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder holder)
     {
-//        if (!isPaused)
-//        {
-//            isPaused = true;
-//        }
     }
 
     @Override
