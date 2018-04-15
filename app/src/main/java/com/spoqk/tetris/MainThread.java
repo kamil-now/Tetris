@@ -4,10 +4,13 @@ package com.spoqk.tetris;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+import com.spoqk.tetris.fragments.GamePanelFragment;
+import com.spoqk.tetris.fragments.GamePanelView;
+
 public class MainThread extends Thread
 {
     private SurfaceHolder surfaceHolder;
-    private GamePanel gamePanel;
+    private GamePanelView gamePanelView;
     private boolean running;
     public void setRunning(boolean running)
     {
@@ -15,11 +18,11 @@ public class MainThread extends Thread
     }
     public static Canvas canvas;
 
-    public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel)
+    public MainThread(SurfaceHolder surfaceHolder, GamePanelView gamePanel)
     {
         super();
         this.surfaceHolder = surfaceHolder;
-        this.gamePanel = gamePanel;
+        this.gamePanelView = gamePanel;
 
     }
 
@@ -36,7 +39,7 @@ public class MainThread extends Thread
                 if(canvas!=null)
                     synchronized (surfaceHolder)
                     {
-                        this.gamePanel.draw(canvas);
+                        this.gamePanelView.draw(canvas);
                     }
             }
             catch (Exception e)

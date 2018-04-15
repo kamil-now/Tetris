@@ -1,29 +1,27 @@
-package com.spoqk.tetris;
-
+package com.spoqk.tetris.fragments;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
+import com.spoqk.tetris.Grid;
+import com.spoqk.tetris.IRotate;
+import com.spoqk.tetris.MainThread;
+import com.spoqk.tetris.RandomBlockGenerator;
 import com.spoqk.tetris.models.base.Block;
 
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public final class GamePanel extends SurfaceView implements SurfaceHolder.Callback
+public final class GamePanelView extends SurfaceView implements SurfaceHolder.Callback
 {
-    private static GamePanel instance;
-
-    public static GamePanel getInstance()
-    {
-        return instance;
-    }
-
     private MainThread thread;
     private float initEventX;
     private float initEventY;
@@ -33,36 +31,34 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
     private Block block;
     private boolean isPaused;
 
-    public Grid getGrid()
+    public boolean isPaused()
     {
-        return grid;
+        return isPaused;
     }
+    public Block getBlock(){
+        return block;
+    }
+    Paint paint = new Paint();
 
-    public GamePanel(Context context)
+    public GamePanelView(Context context, Grid grid)
     {
         super(context);
-        if (instance == null)
-        {
-            instance = this;
-            getHolder().addCallback(this);
-            setFocusable(true);
+        getHolder().addCallback(this);
+        setFocusable(true);
 
-            init();
-        }
+        thread = new MainThread(getHolder(), this);
+        this.grid = grid;
+        Point startingPoint = new Point(grid.getColumns() / 2, -2);
+        new RandomBlockGenerator(startingPoint);
+        block = RandomBlockGenerator.getRandom();
+
+        paint.setColor(Color.BLACK);
     }
+
 
     public void pauseClick()
     {
         isPaused = !isPaused;
-    }
-
-    private void init()
-    {
-        thread = new MainThread(getHolder(), this);
-        grid = new Grid(24, 10, Color.GRAY);
-        Point startingPoint = new Point(grid.getColumns() / 2, -2);
-        new RandomBlockGenerator(startingPoint);
-        block = RandomBlockGenerator.getRandom();
     }
 
     @Override
@@ -71,12 +67,6 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         super.draw(canvas);
         grid.draw(canvas);
         block.draw(canvas);
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-    {
-
     }
 
     @Override
@@ -91,30 +81,35 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         thread.start();
     }
 
-    public void onResume()
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height)
     {
 
-        new Timer().scheduleAtFixedRate(
-                new TimerTask()
-                {
-                    @Override
-                    public void run()
-                    {
-                        if (!isPaused)
-                        {
-                            boolean canMoveDown = block.canMoveDown();
-                            if (canMoveDown)
-                                block.moveDown();
-                            else
-                                createNewBlock();
-                        }
-                    }
-                }, 0, 1000);
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder)
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder)
     {
+
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec)
+    {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        int parentWidth = MeasureSpec.getSize(widthMeasureSpec);
+        int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
+        this.setMeasuredDimension(parentWidth, parentHeight);
+    }
+
+    public void createNewBlock()
+    {
+        if (block != null)
+        {
+            grid.addToFixedBlocks(block);
+        }
+        block = RandomBlockGenerator.getRandom();
     }
 
     @Override
@@ -150,15 +145,6 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         return super.onTouchEvent(event);
     }
 
-    private void createNewBlock()
-    {
-        if (block != null)
-        {
-            grid.addToFixedBlocks(block);
-        }
-        block = RandomBlockGenerator.getRandom();
-    }
-
     //slide right/left logic
     private void moveBlock(MotionEvent event)
     {
@@ -180,4 +166,3 @@ public final class GamePanel extends SurfaceView implements SurfaceHolder.Callba
         }
     }
 }
-

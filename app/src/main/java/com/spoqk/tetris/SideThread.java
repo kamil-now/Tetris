@@ -3,12 +3,13 @@ package com.spoqk.tetris;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
-import com.spoqk.tetris.activities.SidePanelActivity;
+import com.spoqk.tetris.fragments.SideFragment;
+
 
 public class SideThread extends Thread
 {
     private SurfaceHolder surfaceHolder;
-    private SidePanelActivity sidePanel;
+    private SideFragment sidePanel;
     private boolean running;
 
     public void setRunning(boolean running)
@@ -17,7 +18,7 @@ public class SideThread extends Thread
     }
     public static Canvas canvas;
 
-    public SideThread(SurfaceHolder surfaceHolder, SidePanelActivity sidePanel)
+    public SideThread(SurfaceHolder surfaceHolder, SideFragment sidePanel)
     {
         super();
         this.surfaceHolder = surfaceHolder;
@@ -25,42 +26,42 @@ public class SideThread extends Thread
 
     }
 
-    @Override
-    public void run()
-    {
-        canvas = null;
-
-        while (running)
-        {
-            try
-            {
-                canvas = this.surfaceHolder.lockCanvas();
-                if(canvas!=null)
-                    synchronized (surfaceHolder)
-                    {
-                        this.sidePanel.draw(canvas);
-                    }
-            }
-            catch (Exception e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                if (canvas != null)
-                {
-                    try
-                    {
-                        surfaceHolder.unlockCanvasAndPost(canvas);
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
+//    @Override
+//    public void run()
+//    {
+//        canvas = null;
+//
+//        while (running)
+//        {
+//            try
+//            {
+//                canvas = this.surfaceHolder.lockCanvas();
+//                if(canvas!=null)
+//                    synchronized (surfaceHolder)
+//                    {
+//                        this.sidePanel.draw(canvas);
+//                    }
+//            }
+//            catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//            finally
+//            {
+//                if (canvas != null)
+//                {
+//                    try
+//                    {
+//                        surfaceHolder.unlockCanvasAndPost(canvas);
+//                    }
+//                    catch (Exception e)
+//                    {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 

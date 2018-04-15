@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
-import com.spoqk.tetris.GamePanel;
+import com.spoqk.tetris.fragments.GamePanelFragment;
 import com.spoqk.tetris.Grid;
 import com.spoqk.tetris.GridPoint;
 
@@ -38,7 +38,7 @@ public class Square
     public void draw(Canvas canvas)
     {
         rect.set(actualPosition.left(), actualPosition.top(), actualPosition.right(), actualPosition.bottom());
-        if (this.isOnGrid(GamePanel.getInstance().getGrid()))
+        if (this.isOnGrid(GamePanelFragment.getInstance().getGrid()))
             canvas.drawRect(rect, paint);
     }
 

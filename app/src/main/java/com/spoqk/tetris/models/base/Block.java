@@ -5,7 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import com.spoqk.tetris.BlockPositionHolder;
-import com.spoqk.tetris.GamePanel;
+import com.spoqk.tetris.fragments.GamePanelFragment;
 import com.spoqk.tetris.Grid;
 import com.spoqk.tetris.IRotate;
 import com.spoqk.tetris.enums.Direction;
@@ -71,7 +71,7 @@ public abstract class Block
     }
     public boolean canMoveRight()
     {
-        return right.getPosition().x + 1 < GamePanel.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
+        return right.getPosition().x + 1 < GamePanelFragment.getInstance().getGrid().getColumns() && !collidesWithFixedBlock(Direction.RIGHT);
     }
 
     public boolean canMoveLeft()
@@ -81,15 +81,15 @@ public abstract class Block
 
     public boolean canMoveDown()
     {
-        return (left.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && right.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && top.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()
-                && bottom.getPosition().y + 1 < GamePanel.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
+        return (left.getPosition().y + 1 < GamePanelFragment.getInstance().getGrid().getRows()
+                && right.getPosition().y + 1 < GamePanelFragment.getInstance().getGrid().getRows()
+                && top.getPosition().y + 1 < GamePanelFragment.getInstance().getGrid().getRows()
+                && bottom.getPosition().y + 1 < GamePanelFragment.getInstance().getGrid().getRows()) && !collidesWithFixedBlock(Direction.DOWN);
     }
     //collision detection with other blocks on the grid
     protected boolean collidesWithFixedBlock(Direction direction)
     {
-        List<Square> tempList = GamePanel.getInstance().getGrid().getFixedBlocks();
+        List<Square> tempList = GamePanelFragment.getInstance().getGrid().getFixedBlocks();
         BlockPositionHolder temp = new BlockPositionHolder(this, direction);
         for (Square fixed : tempList)
         {
@@ -117,7 +117,7 @@ public abstract class Block
             }
             else
             {
-                Grid grid = GamePanel.getInstance().getGrid();
+                Grid grid = GamePanelFragment.getInstance().getGrid();
                 if (!left.isOnGrid(grid))
                 {
                     if (!correctToRight(grid))

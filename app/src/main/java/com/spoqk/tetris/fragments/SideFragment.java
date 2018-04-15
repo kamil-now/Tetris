@@ -1,18 +1,21 @@
-package com.spoqk.tetris.activities;
+package com.spoqk.tetris.fragments;
 
-import android.content.Context;
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.spoqk.tetris.GamePanel;
 import com.spoqk.tetris.R;
+import com.spoqk.tetris.activities.MainActivity;
 
-public final class SidePanelActivity extends LinearLayout implements View.OnClickListener
+
+public class SideFragment extends Fragment implements View.OnClickListener
 {
-    private static SidePanelActivity instance;
+    private static SideFragment instance;
 
-    public static SidePanelActivity getInstance()
+    public static SideFragment getInstance()
     {
         return instance;
     }
@@ -38,20 +41,20 @@ public final class SidePanelActivity extends LinearLayout implements View.OnClic
         return level;
     }
 
-    public SidePanelActivity(Context context)
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        super(context);
-
-
+        View rootView = inflater.inflate(R.layout.fragment_side_panel, container, false);
         if (instance == null)
         {
+
             instance = this;
-            View.inflate(context, R.layout.activity_sidepanel, this);
-            levelTv = findViewById(R.id.level);
-            setLevel(1);
-            findViewById(R.id.pauseBtn).setOnClickListener(this);
-            findViewById(R.id.exitBtn).setOnClickListener(this);
+            levelTv = rootView.findViewById(R.id.level);
+            setLevel(3);
+            rootView.findViewById(R.id.pauseBtn).setOnClickListener(this);
+            rootView.findViewById(R.id.exitBtn).setOnClickListener(this);
         }
+        return rootView;
     }
 
     @Override
@@ -60,7 +63,7 @@ public final class SidePanelActivity extends LinearLayout implements View.OnClic
         switch (view.getId())
         {
             case R.id.pauseBtn:
-                GamePanel.getInstance().pauseClick();
+                //GamePanelView.getInstance().pauseClick();
                 break;
             case R.id.exitBtn:
                 exit();

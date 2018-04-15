@@ -66,6 +66,7 @@ public class Grid
 
     public void draw(Canvas canvas)
     {
+
         int width = canvas.getWidth();
         int height = canvas.getHeight();
 
