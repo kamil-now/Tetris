@@ -2,14 +2,12 @@ package com.spoqk.tetris.fragments;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 
+import com.spoqk.tetris.App;
 import com.spoqk.tetris.Grid;
 import com.spoqk.tetris.IRotate;
 import com.spoqk.tetris.MainThread;
@@ -17,8 +15,6 @@ import com.spoqk.tetris.RandomBlockGenerator;
 import com.spoqk.tetris.models.base.Block;
 
 import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public final class GamePanelView extends SurfaceView implements SurfaceHolder.Callback
 {
@@ -29,20 +25,16 @@ public final class GamePanelView extends SurfaceView implements SurfaceHolder.Ca
     private long startClickTime;
     private Grid grid;
     private Block block;
-    private boolean isPaused;
 
-    public boolean isPaused()
+    public Block getBlock()
     {
-        return isPaused;
-    }
-    public Block getBlock(){
         return block;
     }
-    Paint paint = new Paint();
 
     public GamePanelView(Context context, Grid grid)
     {
         super(context);
+        App.setContext(context);
         getHolder().addCallback(this);
         setFocusable(true);
 
@@ -51,14 +43,6 @@ public final class GamePanelView extends SurfaceView implements SurfaceHolder.Ca
         Point startingPoint = new Point(grid.getColumns() / 2, -2);
         new RandomBlockGenerator(startingPoint);
         block = RandomBlockGenerator.getRandom();
-
-        paint.setColor(Color.BLACK);
-    }
-
-
-    public void pauseClick()
-    {
-        isPaused = !isPaused;
     }
 
     @Override
@@ -115,33 +99,31 @@ public final class GamePanelView extends SurfaceView implements SurfaceHolder.Ca
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        if (!isPaused)
+        switch (event.getAction())
         {
-            switch (event.getAction())
-            {
-                case MotionEvent.ACTION_DOWN:
-                    startClickTime = Calendar.getInstance().getTimeInMillis();
-                    initEventX = event.getX();
-                    initEventY = event.getY();
-                    return true;
-                case MotionEvent.ACTION_MOVE:
-                    moveBlock(event);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                    long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
-                    float y = event.getY();
-                    float x = event.getX();
-                    if (clickDuration < MAX_CLICK_DURATION && Math.abs(y - initEventY) < 1 && Math.abs(x - initEventX) < 20)
-                    {
-                        if (block instanceof IRotate)
-                            ((IRotate) block).rotate();
-                    }
-                    else if (y > initEventY && Math.abs(x - initEventX) < 20)
-                    {
-                        block.drop();
-                    }
-            }
+            case MotionEvent.ACTION_DOWN:
+                startClickTime = Calendar.getInstance().getTimeInMillis();
+                initEventX = event.getX();
+                initEventY = event.getY();
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                moveBlock(event);
+                return true;
+            case MotionEvent.ACTION_UP:
+                long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                float y = event.getY();
+                float x = event.getX();
+                if (clickDuration < MAX_CLICK_DURATION && Math.abs(y - initEventY) < 1 && Math.abs(x - initEventX) < 20)
+                {
+                    if (block instanceof IRotate)
+                        ((IRotate) block).rotate();
+                }
+                else if (y > initEventY && Math.abs(x - initEventX) < 20)
+                {
+                    block.drop();
+                }
         }
+
         return super.onTouchEvent(event);
     }
 

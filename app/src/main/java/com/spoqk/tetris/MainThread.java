@@ -23,7 +23,6 @@ public class MainThread extends Thread
         super();
         this.surfaceHolder = surfaceHolder;
         this.gamePanelView = gamePanel;
-
     }
 
     @Override

@@ -4,5 +4,13 @@
     <color name="colorPrimaryDark">#6c6c6c</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorText">#FFFFFF</color>
-    <color name="exit">#f40000</color>
+    <color name="colorPause">#FFB400</color>
+    <color name="colorExit">#FF2800</color>
+    <color name="colorL">#1B1BB3</color>
+    <color name="colorO">#FFBF00</color>
+    <color name="colorJ">#FF9200</color>
+    <color name="colorS">#00CC00</color>
+    <color name="colorZ">#FF0000</color>
+    <color name="colorT">#CD0074</color>
+    <color name="colorI">#00F4FF</color>
 </resources>

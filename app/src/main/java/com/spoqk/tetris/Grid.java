@@ -3,16 +3,13 @@ package com.spoqk.tetris;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-
 import com.spoqk.tetris.models.Square;
 import com.spoqk.tetris.models.base.Block;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Grid
 {
-
     private static int leftMargin;
     private static int topMargin;
     private static int columns;
@@ -58,7 +55,7 @@ public class Grid
         gridPaint = new Paint();
 
         gridPaint.setColor(color);
-        gridPaint.setStrokeWidth(3);
+        gridPaint.setStrokeWidth(5);
 
         fixedBlocks = new ArrayList();
     }

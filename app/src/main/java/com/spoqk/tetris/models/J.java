@@ -1,7 +1,10 @@
 package com.spoqk.tetris.models;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.support.v4.content.ContextCompat;
 
+import com.spoqk.tetris.App;
+import com.spoqk.tetris.R;
 import com.spoqk.tetris.models.base.FourTypeRotationBlock;
 
 
@@ -9,7 +12,7 @@ public final class J extends FourTypeRotationBlock
 {
     public J(Point position)
     {
-        super(position, Color.rgb(255,165,0));
+        super(position, ContextCompat.getColor(App.getContext(), R.color.colorJ));
         rotation= Rotation.UP;
         updatePos(position);
     }

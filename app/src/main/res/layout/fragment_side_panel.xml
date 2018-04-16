@@ -28,7 +28,7 @@
 
             <TextView
                 android:id="@+id/level"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@color/colorPrimary"
@@ -46,7 +46,7 @@
                 android:gravity="center"
                 android:text="@string/pause"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorPause"
                 android:textSize="30sp" />
 
             <Button
@@ -58,7 +58,7 @@
                 android:gravity="center"
                 android:text="@string/exit"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorExit"
                 android:textSize="40sp" />
         </LinearLayout>
     </RelativeLayout>

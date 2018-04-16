@@ -1,15 +1,17 @@
 package com.spoqk.tetris.models;
 
-import android.graphics.Color;
 import android.graphics.Point;
+import android.support.v4.content.ContextCompat;
 
+import com.spoqk.tetris.App;
+import com.spoqk.tetris.R;
 import com.spoqk.tetris.models.base.TwoTypeRotationBlock;
 
 public final class I extends TwoTypeRotationBlock
 {
     public I(Point position)
     {
-        super(position, Color.CYAN);
+        super(position, ContextCompat.getColor(App.getContext(), R.color.colorI));
         rotation= Rotation.VERTICAL;
         updatePos(position);
     }

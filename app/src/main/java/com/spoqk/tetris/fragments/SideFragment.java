@@ -47,7 +47,6 @@ public class SideFragment extends Fragment implements View.OnClickListener
         View rootView = inflater.inflate(R.layout.fragment_side_panel, container, false);
         if (instance == null)
         {
-
             instance = this;
             levelTv = rootView.findViewById(R.id.level);
             setLevel(3);
